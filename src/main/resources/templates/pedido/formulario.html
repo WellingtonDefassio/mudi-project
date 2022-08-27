@@ -1,36 +1,50 @@
 <html>
-<head>
-    <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-</head>
+<head th:replace="~{base :: head}"> </head>
 <body>
+<div th:replace="~{base:: logo}"> </div>
+
 <div class="container">
-    <div class="jumbotron mb-0">
-        <h1 class="display-4">Novo Pedido</h1>
+    <div th:replace="~{base::titulo('Novo Pedido!')}"></div>
+    <div class="card mt-3">
+        <form th:object="${requestPedidoDTO}" class="card-body" action="/pedido/novo" method="post">
+            <div class="form-group">
+                <label for="nomeProduto">Produto</label>
+                <input th:field="*{nomeProduto}" th:errorclass="is-invalid" class="form-control"
+                       placeholder="nome do produto"/>
+                <small>informe o nome do produto</small>
+                <div class="invalid-feedback" th:errors="*{nomeProduto}">
+                    erro nome do produto
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="urlProduto">Url do produto</label>
+                <input th:field="*{urlProduto}" th:errorclass="is-invalid" class="form-control"
+                       placeholder="url do produto"/>
+                <small>procure em um site o produto que deseja cole o url da pagina aqui</small>
+                <div class="invalid-feedback" th:errors="*{urlProduto}">
+                    erro url do produto
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="urlImagem">Url da imagem</label>
+                <input th:field="*{urlImagem}" th:errorclass="is-invalid" class="form-control"
+                       placeholder="url da imagem"/>
+                <small>url imagem aqui</small>
+                <div class="invalid-feedback" th:errors="*{urlImagem}">
+                    url imagem
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="descricao">Descricao</label>
+                <textarea th:field="*{descricao}" th:errorclass="is-invalid" class="form-control"
+                          placeholder="descricao do produto"></textarea>
+            </div>
+            <div class="invalid-feedback" th:errors="*{descricao}">
+                erro descricao produto
+            </div>
+            <button class="btn btn-primary" type="submit">Cadastrar</button>
+        </form>
     </div>
-    <form action="/pedido/novo" method="post">
-        <div>
-            <label for="nomeProduto">Produto</label>
-            <input  name="nomeProduto" placeholder="nome do produto"/>
-            <small>informe o nome do produto</small>
-        </div>
-        <div>
-            <label for="urlDoProduto">Url</label>
-            <input  name="urlDoProduto" placeholder="url do produto"/>
-            <small>procure em um site o produto que deseja cole o url da pagina aqui</small>
-        </div>
-        <div>
-            <label for="urlDaImagem">Url</label>
-            <input  name="urlDaImagem" placeholder="url da imagem"/>
-            <small>copie uma boa imagem do produto e cole aqui</small>
-        </div>
-        <div>
-            <label for="descricao">Descricao</label>
-            <textarea  name="descricao" placeholder="descricao do produto"></textarea>
-        </div>
-        <button type="submit">Cadastrar</button>
-    </form>
 </div>
 </body>
 </html>

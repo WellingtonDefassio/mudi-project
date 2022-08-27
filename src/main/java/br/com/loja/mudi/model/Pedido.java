@@ -1,9 +1,6 @@
 package br.com.loja.mudi.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -18,6 +15,25 @@ public class Pedido {
     private String urlProduto;
     private String urlImagem;
     private String descricao;
+    @Enumerated(EnumType.STRING)
+    private StatusPedido statusPedido;
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public StatusPedido getStatusPedido() {
+        return statusPedido;
+    }
+
+    public void setStatusPedido(StatusPedido statusPedido) {
+        this.statusPedido = statusPedido;
+    }
 
     public String getNomeProduto() {
         return nomeProduto;
