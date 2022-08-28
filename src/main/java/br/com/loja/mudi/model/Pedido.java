@@ -1,5 +1,8 @@
 package br.com.loja.mudi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,7 +20,7 @@ public class Pedido {
     private String descricao;
     @Enumerated(EnumType.STRING)
     private StatusPedido statusPedido;
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
