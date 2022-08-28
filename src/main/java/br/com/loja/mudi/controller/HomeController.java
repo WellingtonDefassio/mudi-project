@@ -3,11 +3,12 @@ package br.com.loja.mudi.controller;
 import br.com.loja.mudi.model.Pedido;
 import br.com.loja.mudi.model.StatusPedido;
 import br.com.loja.mudi.repository.PedidoRepository;
+import br.com.loja.mudi.repository.UserRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -16,28 +17,23 @@ import java.util.List;
 @RequestMapping("home")
 public class HomeController {
     PedidoRepository pedidoRepository;
+    UserRepository userRepository;
 
-    public HomeController(PedidoRepository pedidoRepository) {
+    public HomeController(PedidoRepository pedidoRepository, UserRepository userRepository) {
         this.pedidoRepository = pedidoRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping()
     public String home(Model model) {
-        List<Pedido> pedidos = pedidoRepository.findAll();
-        model.addAttribute("pedidos", pedidos);
-        return "home";
-    }
-    @GetMapping("/{status}")
-    public String porStatus(@PathVariable("status") String status, Model model) {
-        List<Pedido> pedidos = pedidoRepository.findByStatusPedido(StatusPedido.valueOf(status.toUpperCase()));
-        model.addAttribute("pedidos", pedidos);
-        model.addAttribute("status", status);
-        return "home";
-    }
+        Sort sort = Sort.by("dataDaEntrega").descending();
+        PageRequest paginacao = PageRequest.of(0, 10, sort);
 
-    @ExceptionHandler(Exception.class)
-    public String onError() {
-        return "redirect:/home";
+
+        List<Pedido> pedidos = pedidoRepository.findByStatusPedido(StatusPedido.ENTREGUE,paginacao);
+        model.addAttribute("pedidos", pedidos);
+        model.addAttribute("nomePag", "home");
+        return "home";
     }
 
 }

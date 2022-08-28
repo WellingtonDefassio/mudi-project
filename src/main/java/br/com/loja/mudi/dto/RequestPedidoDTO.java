@@ -14,8 +14,6 @@ public class RequestPedidoDTO {
     private String urlImagem;
     private String descricao;
 
-
-
     public String getNomeProduto() {
         return nomeProduto;
     }
@@ -55,6 +53,7 @@ public class RequestPedidoDTO {
         pedido.setUrlImagem(this.urlImagem);
         pedido.setUrlProduto(this.urlProduto);
         pedido.setStatusPedido(StatusPedido.AGUARDANDO);
+
         return pedido;
     }
 }
