@@ -4,9 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -23,6 +20,8 @@ public class WebSecurityConfig {
 
         http.authorizeRequests()
                 .antMatchers("/home/**")
+                .permitAll()
+                .antMatchers("/templates/oferta/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated().and().formLogin(form -> form
